@@ -1,4 +1,4 @@
-#getstockindex 
+# getstockindex 
 
 1. clean the null values v
 2. handle the page number auto update v
