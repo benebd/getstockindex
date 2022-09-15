@@ -10,12 +10,12 @@ bsObj = BeautifulSoup(r, 'html.parser')
 
 page = bsObj.find('div',class_ = 'pagingWrap nopad')
 num = int(page.findAll('span')[12].getText())
-print(num)
-
+#print(num)
+print(num , "page to crawl")
 df = pd.DataFrame(columns=['stockid'])
 for i in range(1,num+1):
     url1 = 'https://stock360.hkej.com/stockList/all/20220909?&p='+str(i)
-    print(url1)
+    print("crawling page",i,url1)
     #print(i)
     r = requests.get(url1).text
     bsObj = BeautifulSoup(r, 'html.parser')
@@ -31,6 +31,7 @@ for i in range(1,num+1):
             stockid = columns[0].text.strip()
             df.loc[len(df.index)] = [stockid]
             #print(stockid)
+print("finish crawling save csv file to home directory name hkstock_id.csv")
 
 df.to_csv( '../hkstock_id.csv', index=False, header = True)
 df = pd.read_csv('../hkstock_id.csv')
