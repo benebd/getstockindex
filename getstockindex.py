@@ -33,3 +33,6 @@ for i in range(1,num+1):
             #print(stockid)
 
 df.to_csv( '../hkstock_id.csv', index=False, header = True)
+df = pd.read_csv('../hkstock_id.csv')
+df.dropna(inplace = True)
+df.to_csv( '../hkstock_id.csv', index=False, header = True)
