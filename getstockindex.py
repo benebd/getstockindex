@@ -2,8 +2,18 @@ import requests
 from bs4 import BeautifulSoup
 import numpy as np
 import pandas as pd
+import datetime
 
-url = 'https://stock360.hkej.com/stockList/all/20220909?&p=1'
+
+y = datetime.datetime.now().year
+m = datetime.datetime.now().month
+d = datetime.datetime.now().day
+m = str(m) if m > 9 else '0' + str(m)
+d = str(d) if d > 9 else '0' + str(d)
+datestr = '%s%s%s' %(y,m,d)
+
+url = 'https://stock360.hkej.com/stockList/all/%s?&p=1'%(datestr)
+
 
 r = requests.get(url).text
 bsObj = BeautifulSoup(r, 'html.parser')
@@ -14,7 +24,7 @@ num = int(page.findAll('span')[12].getText())
 print(num , "page to crawl")
 df = pd.DataFrame(columns=['stockid'])
 for i in range(1,num+1):
-    url1 = 'https://stock360.hkej.com/stockList/all/20220909?&p='+str(i)
+    url1 = 'https://stock360.hkej.com/stockList/all/%s?&p=%s'%(datestr,str(i))
     print("crawling page",i,url1)
     #print(i)
     r = requests.get(url1).text
